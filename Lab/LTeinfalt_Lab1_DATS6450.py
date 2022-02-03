@@ -19,6 +19,7 @@ print("Create a random variable y normally distributed about the mean of 5 and v
 print("Number of samples for both x and y = 1000.")
 
 print("Formula: standard deviation is equal to the square root of variance.")
+np.random.seed(42)
 N = 1000
 xmean = 0
 std_x = np.sqrt(1)
@@ -46,15 +47,14 @@ def corr_coeff(x, y):
     mean_x = np.mean(x)
     mean_y = np.mean(y)
 
-    if len(x) == len(y):
-        for i in range(len(x)):
-            x_hat = (x[i] - mean_x)
-            diff_x.append(x_hat)
-            diff_x_squared.append(np.square(x_hat))
-            y_hat = (y[i]- mean_y)
-            r.append((x_hat * y_hat))
-            diff_y_squared.append(np.square(y_hat))
-            return (np.sum(r))/(np.sqrt(np.sum(diff_x_squared))*np.sqrt(np.sum(diff_y_squared)))
+    for i in range(len(x)):
+        x_hat = (x[i] - mean_x)
+        diff_x.append(x_hat)
+        diff_x_squared.append(np.square(x_hat))
+        y_hat = (y[i]- mean_y)
+        r.append((x_hat * y_hat))
+        diff_y_squared.append(np.square(y_hat))
+    return (np.sum(r))/(np.sqrt(np.sum(diff_x_squared))*np.sqrt(np.sum(diff_y_squared)))
 
 
 #x = [1, 2, 3, 4, 5]
@@ -149,6 +149,8 @@ plt.xlabel("Values")
 plt.ylabel("Frequency")
 plt.grid()
 plt.show()
+
+
 
 
 
