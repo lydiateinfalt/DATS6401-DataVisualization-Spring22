@@ -110,5 +110,3 @@ for j in stocks:
     dc.rename(columns=renamed_cols, inplace=True)
     dc.to_csv(j + ".csv")
     print(dc)
-
-
