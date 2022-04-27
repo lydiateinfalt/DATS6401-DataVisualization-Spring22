@@ -38,132 +38,132 @@ for i in countries:
     new_column= i+"_sum"
     first_index = idx[0]
     last_index = idx[-1]
-#china 57:89
-#united Kingdom 249:259
+# china 57:89
+# united Kingdom 249:259
 
 
 df1['China_sum'] = df1.iloc[:,57:89].astype(float).sum(axis=1)
 df1['United Kingdom_sum'] = df1.iloc[:,249:259].astype(float).sum(axis=1)
-
-#us covid cases - Line plot
-fig, ax = plt.subplots(figsize=(12,10))
-ax.plot(df1['Date'], df1['US'], linewidth = 2, marker = '.')
-ax.grid()
-ax.set_ylabel("Confirmed COVID19 Cases")
-plt.xticks(rotation=70)
-ax.set_xlabel("Year")
-ax.set_title("US Confirmed COVID19 Cases")
-ax.xaxis.set_major_locator(mdates.MonthLocator())
-ax.xaxis.set_major_formatter(mdates.DateFormatter('%b %Y'))
-plt.grid()
-plt.tight_layout()
-plt.show()
-
-#Question 5 Global Confirmed COVID19 Cases
-#“United Kingdom”, “China”, ”Germany”, ”Brazil”, “India” and “Italy”
-fig, ax = plt.subplots(figsize=(12,10))
-ax.plot(df1['Date'], df1['United Kingdom_sum'], label = 'United Kingdom', linewidth = 3)
-ax.plot(df1['Date'], df1['China_sum'], label = 'China',linewidth = 3)
-ax.plot(df1['Date'], df1['US'], label = 'US',linewidth = 3)
-ax.plot(df1['Date'], df1['Germany'], label = 'Germany', linewidth = 3)
-ax.plot(df1['Date'], df1['Brazil'], label = 'Brazil', linewidth = 3)
-ax.plot(df1['Date'], df1['India'], label = 'India', linewidth = 3)
-ax.plot(df1['Date'], df1['Italy'], label = 'Italy', linewidth = 3)
-ax.grid()
-ax.set_ylabel("Confirmed COVID19 Cases")
-plt.legend()
-plt.xticks(rotation=70)
-ax.set_xlabel("Year")
-ax.set_title("Global Confirmed COVID19 Cases")
-ax.xaxis.set_major_locator(mdates.MonthLocator())
-ax.xaxis.set_major_formatter(mdates.DateFormatter('%b %Y'))
-plt.grid()
-plt.tight_layout()
-plt.show()
-
-
-
-#Question 6 Plot histogram for US Covid19 Cases
-fig, ax = plt.subplots(figsize=(12,10))
-us = df1['US']
-ax.hist(df1['US'], label = 'US')
-ax.set_ylabel("Frequency")
-ax.legend()
-ax.grid()
-ax.set_xlabel("Values")
-ax.set_title("US Confirmed COVID19 Cases Histogram")
-plt.grid()
-plt.show()
-
-
-#“United Kingdom”, “China”, ”Germany”, ”Brazil”, “India” and “Italy”
-fig, ax = plt.subplots(figsize=(18,12))
-plt.grid()
-ax = fig.add_subplot(2,3,1)
-ax.hist(df1['United Kingdom_sum'], label ='United Kingdom', color = 'green' )
-ax.set_title("UK Confirmed COVID19 Cases Histogram")
-ax.set_ylabel("Frequency")
-ax.set_xlabel("Values")
-ax.legend()
-ax = fig.add_subplot(2,3,2)
-ax.hist(df1['China_sum'], label = 'China', color = 'red')
-ax.set_title("China Confirmed COVID19 Cases Histogram")
-ax.set_ylabel("Frequency")
-ax.set_xlabel("Values")
-ax.legend()
-ax = fig.add_subplot(2,3,3)
-ax.hist(df1['Germany'], label = 'Germany', color = 'brown')
-ax.set_title("Germany Confirmed COVID19 Cases Histogram")
-ax.set_ylabel("Frequency")
-ax.set_xlabel("Values")
-ax.legend()
-ax = fig.add_subplot(2,3,4)
-ax.hist(df1['Brazil'], label = 'Brazil', color = 'blue')
-ax.set_title("Brazil Confirmed COVID19 Cases Histogram")
-ax.set_ylabel("Frequency")
-ax.set_xlabel("Values")
-ax.legend()
-ax = fig.add_subplot(2,3,5)
-ax.hist(df1['India'], label = 'India', color = 'orange')
-ax.set_title("India Confirmed COVID19 Cases Histogram")
-ax.set_ylabel("Frequency")
-ax.set_xlabel("Values")
-ax.legend()
-ax = fig.add_subplot(2,3,6)
-ax.hist(df1['Italy'], label = 'Italy', color = 'purple')
-ax.set_title("Italy Confirmed COVID19 Cases Histogram")
-ax.set_ylabel("Frequency")
-ax.set_xlabel("Values")
-plt.legend()
-plt.tight_layout()
-plt.show()
-
-#Which country (from the list above) has the highest mean, variance and median of # of COVID confirmed cases?
-df_mean = df1[['China_sum', 'United Kingdom_sum', 'US', 'Germany', 'Brazil', 'India', 'Italy']].mean()
-df_mean.columns = "Mean"
-df_mean = df_mean.sort_values()
-print("Mean Confirmed COVID19 Cases")
-print(df_mean)
-print("US had highest mean")
-print("India had highest mean")
-
-df_var = df1[['China_sum', 'United Kingdom_sum', 'US', 'Germany', 'Brazil', 'India', 'Italy']].var()
-df_var.columns = "Variance"
-df_var = df_var.sort_values()
-print("Variance Confirmed COVID19 Cases")
-print(df_var)
-print("US had highest variance")
-print("India had second highest variance")
-
-df_med = df1[['China_sum', 'United Kingdom_sum', 'US', 'Germany', 'Brazil', 'India', 'Italy']].median()
-df_med.columns = "Median"
-df_med = df_med.sort_values()
-print("Median Confirmed COVID19 Cases")
-print(df_med)
-print("US had highest median")
-print("Brazil had highest median")
-
-print("#"*80)
+#
+# #us covid cases - Line plot
+# fig, ax = plt.subplots(figsize=(12,10))
+# ax.plot(df1['Date'], df1['US'], linewidth = 2, marker = '.')
+# ax.grid()
+# ax.set_ylabel("Confirmed COVID19 Cases")
+# plt.xticks(rotation=70)
+# ax.set_xlabel("Year")
+# ax.set_title("US Confirmed COVID19 Cases")
+# ax.xaxis.set_major_locator(mdates.MonthLocator())
+# ax.xaxis.set_major_formatter(mdates.DateFormatter('%b %Y'))
+# plt.grid()
+# plt.tight_layout()
+# plt.show()
+#
+# #Question 5 Global Confirmed COVID19 Cases
+# #“United Kingdom”, “China”, ”Germany”, ”Brazil”, “India” and “Italy”
+# fig, ax = plt.subplots(figsize=(12,10))
+# ax.plot(df1['Date'], df1['United Kingdom_sum'], label = 'United Kingdom', linewidth = 3)
+# ax.plot(df1['Date'], df1['China_sum'], label = 'China',linewidth = 3)
+# ax.plot(df1['Date'], df1['US'], label = 'US',linewidth = 3)
+# ax.plot(df1['Date'], df1['Germany'], label = 'Germany', linewidth = 3)
+# ax.plot(df1['Date'], df1['Brazil'], label = 'Brazil', linewidth = 3)
+# ax.plot(df1['Date'], df1['India'], label = 'India', linewidth = 3)
+# ax.plot(df1['Date'], df1['Italy'], label = 'Italy', linewidth = 3)
+# ax.grid()
+# ax.set_ylabel("Confirmed COVID19 Cases")
+# plt.legend()
+# plt.xticks(rotation=70)
+# ax.set_xlabel("Year")
+# ax.set_title("Global Confirmed COVID19 Cases")
+# ax.xaxis.set_major_locator(mdates.MonthLocator())
+# ax.xaxis.set_major_formatter(mdates.DateFormatter('%b %Y'))
+# plt.grid()
+# plt.tight_layout()
+# plt.show()
+#
+#
+#
+# #Question 6 Plot histogram for US Covid19 Cases
+# fig, ax = plt.subplots(figsize=(12,10))
+# us = df1['US']
+# ax.hist(df1['US'], label = 'US')
+# ax.set_ylabel("Frequency")
+# ax.legend()
+# ax.grid()
+# ax.set_xlabel("Values")
+# ax.set_title("US Confirmed COVID19 Cases Histogram")
+# plt.grid()
+# plt.show()
+#
+#
+# #“United Kingdom”, “China”, ”Germany”, ”Brazil”, “India” and “Italy”
+# fig, ax = plt.subplots(figsize=(18,12))
+# plt.grid()
+# ax = fig.add_subplot(2,3,1)
+# ax.hist(df1['United Kingdom_sum'], label ='United Kingdom', color = 'green' )
+# ax.set_title("UK Confirmed COVID19 Cases Histogram")
+# ax.set_ylabel("Frequency")
+# ax.set_xlabel("Values")
+# ax.legend()
+# ax = fig.add_subplot(2,3,2)
+# ax.hist(df1['China_sum'], label = 'China', color = 'red')
+# ax.set_title("China Confirmed COVID19 Cases Histogram")
+# ax.set_ylabel("Frequency")
+# ax.set_xlabel("Values")
+# ax.legend()
+# ax = fig.add_subplot(2,3,3)
+# ax.hist(df1['Germany'], label = 'Germany', color = 'brown')
+# ax.set_title("Germany Confirmed COVID19 Cases Histogram")
+# ax.set_ylabel("Frequency")
+# ax.set_xlabel("Values")
+# ax.legend()
+# ax = fig.add_subplot(2,3,4)
+# ax.hist(df1['Brazil'], label = 'Brazil', color = 'blue')
+# ax.set_title("Brazil Confirmed COVID19 Cases Histogram")
+# ax.set_ylabel("Frequency")
+# ax.set_xlabel("Values")
+# ax.legend()
+# ax = fig.add_subplot(2,3,5)
+# ax.hist(df1['India'], label = 'India', color = 'orange')
+# ax.set_title("India Confirmed COVID19 Cases Histogram")
+# ax.set_ylabel("Frequency")
+# ax.set_xlabel("Values")
+# ax.legend()
+# ax = fig.add_subplot(2,3,6)
+# ax.hist(df1['Italy'], label = 'Italy', color = 'purple')
+# ax.set_title("Italy Confirmed COVID19 Cases Histogram")
+# ax.set_ylabel("Frequency")
+# ax.set_xlabel("Values")
+# plt.legend()
+# plt.tight_layout()
+# plt.show()
+#
+# #Which country (from the list above) has the highest mean, variance and median of # of COVID confirmed cases?
+# df_mean = df1[['China_sum', 'United Kingdom_sum', 'US', 'Germany', 'Brazil', 'India', 'Italy']].mean()
+# df_mean.columns = "Mean"
+# df_mean = df_mean.sort_values()
+# print("Mean Confirmed COVID19 Cases")
+# print(df_mean)
+# print("US had highest mean")
+# print("India had highest mean")
+#
+# df_var = df1[['China_sum', 'United Kingdom_sum', 'US', 'Germany', 'Brazil', 'India', 'Italy']].var()
+# df_var.columns = "Variance"
+# df_var = df_var.sort_values()
+# print("Variance Confirmed COVID19 Cases")
+# print(df_var)
+# print("US had highest variance")
+# print("India had second highest variance")
+#
+# df_med = df1[['China_sum', 'United Kingdom_sum', 'US', 'Germany', 'Brazil', 'India', 'Italy']].median()
+# df_med.columns = "Median"
+# df_med = df_med.sort_values()
+# print("Median Confirmed COVID19 Cases")
+# print(df_med)
+# print("US had highest median")
+# print("Brazil had highest median")
+#
+# print("#"*80)
 import seaborn as sns
 df = sns.load_dataset('titanic')
 df1 = df.dropna(how='any')
@@ -212,7 +212,7 @@ ax.set_title("Pie Chart of Male Survival on Titanic in %")
 plt.show()
 #
 #
-# #Write a python program that plot the pie chart showing the percentage of females who survived versus the percentage of males who did not survive. The final answer should look like bellow.
+#Write a python program that plot the pie chart showing the percentage of females who survived versus the percentage of males who did not survive. The final answer should look like bellow.
 percent_female_survived = len(df1[(df1['sex'] == 'female')&(df1['survived'] == 1)])/len(df1[df1['sex'] == 'female'])
 percent_female_not_survived = len(df1[(df1['sex'] == 'female')&(df1['survived'] == 0)])/len(df1[df1['sex'] == 'female'])
 fig, ax = plt.subplots(figsize=(8,8))
@@ -222,7 +222,7 @@ ax.legend()
 ax.set_title("Pie Chart of Female Survival on Titanic in %")
 plt.tight_layout()
 plt.show()
-#
+
 
 #Write a python program that plot the pie chart showing the percentage passengers with first class, second class and third-class tickets
 #

@@ -24,16 +24,39 @@ source = 'yahoo'
 #Create empty dataframe
 df1 = pd.DataFrame()
 
-for i in range(len(stocks)):
-    df = web.DataReader(stocks[i], data_source = source, start= start_dt, end = end_dt)
-    df['Symbol'] = stocks[i]
-    df1 = df1.append(df)
+df_tesla = web.DataReader('TSLA', data_source = source, start= start_dt, end = end_dt)
+df_apple = web.DataReader('AAPL', data_source = source, start= start_dt, end = end_dt)
+df_oracle = web.DataReader('ORCL', data_source = source, start= start_dt, end = end_dt)
+df_ibm = web.DataReader('IBM', data_source = source, start= start_dt, end = end_dt)
+df_yelp = web.DataReader('YELP', data_source = source, start= start_dt, end = end_dt)
+df_msft = web.DataReader('MSFT', data_source = source, start= start_dt, end = end_dt)
 
-frames = []
+df1 = df_apple.copy()
+df1['company'] = 'AAPL'
+
+df2 = df_tesla.copy()
+df2['company'] = 'TSLA'
+
+df3 = df_oracle.copy()
+df3['company'] = 'ORCL'
+
+df4 = df_ibm.copy()
+df4['company'] = 'IBM'
+
+df5 = df_yelp.copy()
+df5['company'] = 'YELP'
+
+df6 = df_msft.copy()
+df6['company'] = 'MSFT'
+
+
+frames = [df1, df2, df3, df4, df5, df6]
+result = pd.concat(frames)
 #
 # fig = px.line(x = df_tesla.index, y = df_tesla['Close'])
-fig = px.line(x = df1.index, y = df1['Close'])
-#fig.show(renderer = 'browser')
+# # fig.show(renderer = 'browser')
+fig = px.line(result, x = result.index, y = result.Close, color = 'company')
+fig.show(renderer = 'browser')
 
 #bar
 
@@ -78,9 +101,9 @@ fig.add_trace(
 fig.show(renderer = 'browser')
 
 fig = make_subplots(rows = 1, cols = 2)
-fig.add_trace(
-    go.Pie(values = result.Volume)
-)
+# fig.add_trace(
+#     go.Pie(values = result.Volume)
+# )
 
 
 
