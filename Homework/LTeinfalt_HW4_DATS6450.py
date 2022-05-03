@@ -24,7 +24,7 @@ my_app.layout = html.Div([
 
 tab1_layout = html.Div([
     html.H1('Question1'),
-    html.H3('Change the value in the textbox to see callsbacks in action'),
+    html.H3('Change the value in the textbox to see callbacks in action'),
     html.P('Input:'),
     dcc.Input(id = 'input1', type = 'text' ),
     html.Br(),
