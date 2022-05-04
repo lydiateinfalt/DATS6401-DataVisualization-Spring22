@@ -15,13 +15,12 @@ from sklearn.metrics import accuracy_score, classification_report, confusion_mat
 from scipy import stats
 from scipy.stats import normaltest
 import statsmodels.api as sm
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_squared_error, r2_score
 
-os.chdir("C:\\Users\\Teinfalt\\Documents\\GitHub\\DATS6401-DataVisualization-Spring22\\FinalProject")
+
+# os.chdir("C:\\Users\\Teinfalt\\Documents\\GitHub\\DATS6401-DataVisualization-Spring22\\FinalProject")
 
 #--------------Read in data ------------------#
-data = pd.read_csv("secondary_data_generated.csv", sep=';', header=0)
+data = pd.read_csv("https://raw.githubusercontent.com/lydiateinfalt/DATS6401-DataVisualization-Spring22/main/FinalProject/secondary_data_generated.csv", sep=';', header=0)
 print(data.info)
 print(data.describe())
 columns = data.columns
@@ -33,7 +32,7 @@ df = data.copy()
 df['stem-width'] = df['stem-width']/10
 
 numeric_cols = df.select_dtypes(include='number').columns.to_list()
-categorical_cols = df.select_dtypes(exclude='number').columns.to_list()
+
 print(f'Numeric columns in the mushroom dataframe {numeric_cols}')
 print(f'Categorical columns in the mushroom dataframe {numeric_cols}')
 
@@ -340,13 +339,14 @@ plt.close()
 #==========================================================================
 #         Normalize data - Create histograms
 #==========================================================================
+print(mushroom.describe())
 mushroom['stem-height-norm'] = stats.norm.ppf(stats.rankdata(mushroom['stem-height'])/(len(mushroom['stem-height']) + 1))
 mushroom['stem-width-norm'] = stats.norm.ppf(stats.rankdata(mushroom['stem-width'])/(len(mushroom['stem-width']) + 1))
 mushroom['cap-diameter-norm'] = stats.norm.ppf(stats.rankdata(mushroom['stem-height'])/(len(mushroom['stem-height']) + 1))
 mushroom.to_csv("mushrooms.csv")
 print(mushroom.head())
-print(mushroom.describe())
 print(mushroom.info())
+categorical_cols = mushroom.select_dtypes(exclude='number').columns.to_list()
 
 print("-"*80)
 fig = plt.figure(figsize=(9,9))
@@ -528,6 +528,7 @@ print("-"*80)
 mushroom.drop('stem-width', axis= 1, inplace=True)
 mushroom.drop('stem-height', axis= 1, inplace=True)
 mushroom.drop('cap-diameter', axis= 1, inplace=True)
+print(mushroom.describe())
 
 # Correlation Map after Removing non-normalized columns
 df_encode = mushroom.copy()
@@ -580,23 +581,6 @@ plt.title('Scatter plot of Mushroom Stem-Height vs. Stem-Width')
 plt.ylabel('stem-height (cm)')
 plt.xlabel('stem-width (cm)')
 plt.show()
-#==========================================================================
-#                   Linear Regression
-#==========================================================================
-
-# model = LinearRegression()
-# X = mushroom[['stem-width-norm']]
-# y = mushroom['class']
-# from sklearn.model_selection import train_test_split
-# X_train, X_test, y_train, y_test = train_test_split(X, y, shuffle=True, train_size=0.3)
-# model.fit(X_train, y_train)
-#
-# predictions = model.predict(X_test)
-# r2 = r2_score(y_test, predictions)
-# rmse = mean_squared_error(y_test, predictions, squared=False)
-#
-# print('The r2 is: ', r2)
-# print('The rmse is: ', rmse)
 
 #==========================================================================
 #                   Distplots
@@ -759,6 +743,8 @@ plt.show()
 
 sns.catplot(x = 'class', col = 'gill-attachment', data = mushroom, kind='count', legend = True, legend_out = True,
             height = 3.5, aspect = 0.8, col_wrap=4)
+plt.title("Catplot: Gill-Attachment by Class")
+plt.legend()
 plt.show()
 
 # mushroom['class-code']= pd.factorize(mushroom['class'])[0]
@@ -833,10 +819,10 @@ plt.show()
 # plt.tight_layout()
 # plt.show()
 
-for i, col in enumerate(mushroom.columns):
-    plt.figure(i)
-    sns_plot = sns.countplot(x=col, data = mushroom, hue = 'class')
-plt.show()
+# for i, col in enumerate(categorical_cols):
+#     plt.figure(i)
+#     sns_plot = sns.countplot(x=col, data = mushroom, hue = 'class')
+# plt.show()
 
 sns.countplot(x='stem-color', data = mushroom, hue='class')
 plt.title('Count plot: Stem-Color by Class')
@@ -846,7 +832,22 @@ sns.countplot(x='class', data=mushroom)
 plt.title("Count plot: Poisonous vs Edible Mushrooms")
 plt.show()
 
-sns.barplot(x='stem-color', data=mushroom)
+sns.countplot(x='stem-color', data=mushroom)
 plt.title('Bar plot: Stem-Color')
 plt.tight_layout()
 plt.show()
+
+categorical_cols.remove('class')
+i = 1
+for col in (categorical_cols):
+    ax1 = fig.add_subplot(5, 2, i)
+    data = mushroom
+    sns.countplot(x = col, data=mushroom, hue = 'class')
+    ax1.set_title(f'Count plot: {col} by Class)')
+    i += 1
+plt.tight_layout()
+plt.show()
+
+
+
+
