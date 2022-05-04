@@ -344,6 +344,9 @@ mushroom['stem-height-norm'] = stats.norm.ppf(stats.rankdata(mushroom['stem-heig
 mushroom['stem-width-norm'] = stats.norm.ppf(stats.rankdata(mushroom['stem-width'])/(len(mushroom['stem-width']) + 1))
 mushroom['cap-diameter-norm'] = stats.norm.ppf(stats.rankdata(mushroom['stem-height'])/(len(mushroom['stem-height']) + 1))
 mushroom.to_csv("mushrooms.csv")
+print(mushroom.head())
+print(mushroom.describe())
+print(mushroom.info())
 
 print("-"*80)
 fig = plt.figure(figsize=(9,9))
@@ -539,7 +542,6 @@ fig = plt.figure(figsize=(24,24))
 plt.title("Heatmap of Pearson's Correlation Coefficients Mushroom Dataset")
 sns.heatmap(corr, annot = True, square=True, linewidths=.5, cbar_kws={"shrink": .5})
 sns.set(font_scale = 1.8)
-plt.tight_layout()
 plt.show()
 
 sns.set(font_scale = 1)
@@ -780,8 +782,9 @@ ccc = pd.DataFrame(mushroom['cap-color'].value_counts())
 rtc = pd.DataFrame(mushroom['ring-type'].value_counts())
 hc = pd.DataFrame(mushroom['habitat'].value_counts())
 
-sns.barplot(x = stc.index,  y="stem-color", data = stc)
+sns.barplot(y = stc.index,  x="stem-color", data = stc)
 plt.title("Bar plot: Stem-Color")
+plt.tight_layout()
 plt.show()
 sns.barplot(x = cpc.index,  y="cap-shape", data = cpc)
 plt.title("Bar plot: Cap-Shape")
@@ -791,6 +794,7 @@ plt.title("Bar plot: Gill-Color")
 plt.show()
 sns.barplot(x = ccc.index,  y="cap-color", data = ccc)
 plt.title("Bar plot: Cap-Color")
+plt.tight_layout()
 plt.show()
 
 sc = mushroom[['stem-color', 'class']]
@@ -828,3 +832,21 @@ plt.show()
 # plt.title("Barplot Class by Stem-Color and Has-Ring")
 # plt.tight_layout()
 # plt.show()
+
+for i, col in enumerate(mushroom.columns):
+    plt.figure(i)
+    sns_plot = sns.countplot(x=col, data = mushroom, hue = 'class')
+plt.show()
+
+sns.countplot(x='stem-color', data = mushroom, hue='class')
+plt.title('Count plot: Stem-Color by Class')
+plt.show()
+
+sns.countplot(x='class', data=mushroom)
+plt.title("Count plot: Poisonous vs Edible Mushrooms")
+plt.show()
+
+sns.barplot(x='stem-color', data=mushroom)
+plt.title('Bar plot: Stem-Color')
+plt.tight_layout()
+plt.show()

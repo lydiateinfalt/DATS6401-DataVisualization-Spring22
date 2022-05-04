@@ -1,6 +1,6 @@
 #Lydia Teinfalt
 # Mushroom Final Term Project
-#04/06/2022
+#05/03/2022
 import dash
 import matplotlib.pyplot as plt
 from dash import html
@@ -17,8 +17,6 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 #Main
 my_app = dash.Dash("My app", external_stylesheets= external_stylesheets)
 
-#Question 1 Data -----------------------------------------------------------------------------------------
-
 df= pd.read_csv("mushrooms.csv")
 df = df.dropna(axis=0, how='any')
 columns = df.columns
@@ -32,7 +30,7 @@ my_app.layout = html.Div([
              children=[
                 dcc.Tab(label = 'Pie Charts', value = 'q1'),
                 dcc.Tab(label = 'Classification', value = 'q2'),
-                dcc.Tab(label = 'Violin/Scatter Plots', value='q3'),
+                dcc.Tab(label = 'Violin/Histogram Plots', value='q3'),
                 dcc.Tab(label='Box Plots', value='q4'),
                 dcc.Tab(label='Dashboard', value='q6'),
              ]),
@@ -115,10 +113,10 @@ tab2_layout = html.Div([
 tab3_layout = html.Div([
     html.H4('Violinplot or Scatter'),
     html.Button('Violinplot', id='button-1'),
-    html.Button('Scatter', id='button-2'),
+    html.Button('histogram', id='button-2'),
     html.Div(id='container-button-timestamp'),
     html.Br(),
-    dcc.Graph(id='my-graph3'),
+    dcc.Graph(id='my-graph3')
 ])
 
 tab4_layout = html.Div([
@@ -159,10 +157,10 @@ hc = pd.DataFrame(df['habitat'].value_counts())
 fig61 = px.box(data_frame=df, x='habitat', y='stem-height-norm', color='class')
 # fig62 = px.bar(cpc, x=cpc.index, y="cap-shape", barmode="group")
 fig62 = px.pie(df, values='stem-width-norm', names='habitat')
-fig65 = px.bar(gcc, x=gcc.index, y="gill-color", barmode="group")
+# fig65 = px.bar(gcc, x=gcc.index, y="gill-color", barmode="group")
 fig64 = px.bar(ccc, x=ccc.index, y="cap-color", barmode="group")
 fig63 = px.bar(stc, x='stem-color', y=stc.index, barmode="group", orientation='h')
-fig66 = px.bar(rtc, x=rtc.index, y="ring-type", barmode="group")
+# fig66 = px.bar(rtc, x=rtc.index, y="ring-type", barmode="group")
 tab6_layout = html.Div(children=[
     html.Div([
         html.Div([
@@ -175,7 +173,7 @@ tab6_layout = html.Div(children=[
             # dcc.Slider(id='n', min=0, max=20, value=1),
         ], className='six columns'),
         html.Div([
-            html.H4("Bar Plot: Cap-Shape Counts"),
+            html.H4("Pie Chart: Mushroom Habitat"),
 
             dcc.Graph(
                 id='graph62',
@@ -206,6 +204,10 @@ tab6_layout = html.Div(children=[
             # dcc.Slider(id='n', min=0, max=20, value=1),
         ], className='six columns'),
     ], className='row'),
+    html.Br(),
+    html.P('Have you learned something about mushrooms?'),
+    dcc.Input(id='input6', type='text'),
+    html.Div(id='output6'),
 ])
 
 @my_app.callback(Output(component_id='layout', component_property='children'),
@@ -241,10 +243,10 @@ def update_q1(input):
 
 # Source: https://dash.plotly.com/dash-html-components/button
 @my_app.callback(
-    [Output('container-button-timestamp', 'children'),
+    [Output(component_id='container-button-timestamp', component_property='children'),
      Output(component_id='my-graph3', component_property='figure')],
-    Input('button-1', 'n_clicks'),
-    Input('button-2', 'n_clicks'),
+    Input(component_id='button-1', component_property='n_clicks'),
+    Input(component_id='button-2', component_property='n_clicks'),
 )
 def displayClick(btn1, btn2):
     changed_id = [p['prop_id'] for p in callback_context.triggered][0]
@@ -253,7 +255,8 @@ def displayClick(btn1, btn2):
         fig = px.violin(data_frame=df, x = 'season', y = 'stem-height-norm', color='class')
     elif 'button-2' in changed_id:
         msg = 'Scatter plot was most recently clicked'
-        fig = px.scatter(data_frame=df, x='stem-width-norm', y='stem-height-norm', color='class', trendline='ols')
+        # fig = px.scatter(data_frame=df, x='stem-width-norm', y='stem-height-norm', color='class', trendline='ols')
+        fig = px.histogram(data_frame=df, x='stem-height-norm')
     return html.Div(msg), fig
 
 @my_app.callback(
@@ -269,10 +272,13 @@ def generate_chart(x, y):
     [Output(component_id='graph61', component_property='figure'),
     Output(component_id='graph62', component_property='figure'),
     Output(component_id='graph63', component_property='figure'),
-    Output(component_id='graph64', component_property='figure')]
+    Output(component_id='graph64', component_property='figure'),
+    Output(component_id='output6', component_property='children')],
+    Input(component_id='input6', component_property='value'),
 )
-def display_dashboard():
-    return ""
+def display_dashboard(answer):
+    if answer.lower() == 'yes':
+        return 'Thank you!'
 
 
 my_app.run_server(port = 8080, host='0.0.0.0')
